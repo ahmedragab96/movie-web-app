@@ -1,8 +1,7 @@
 import { User } from '../../models/userModel';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
 import { config } from '../../config';
-import { getCache, setCache, clearCache, getHashCache, setHashCache } from '../../redis';
+import { getHashCache, setHashCache } from '../../redis';
 
 export class AuthService {
   private static instance: AuthService;
@@ -14,18 +13,19 @@ export class AuthService {
     return AuthService.instance;
   }
 
-  public async register(userData: User): Promise<void> {
+  public async register(userData: User): Promise<User> {
     try {
-      console.log('in route register');
       let user = await getHashCache(userData.username);
       if (!user) {
-        console.log('heree');
-        const userId = uuidv4();
-        const token = this._generateAuthToken(userId);
+        const token = this._generateAuthToken(userData.username);
         userData.accessToken = token;
         await setHashCache(userData.username, userData);
 
         user = userData;
+      } else {
+        if (userData.password !== user.password) {
+          throw new Error('Wrong Password');
+        }
       }
       return user;
     } catch (error) {
@@ -33,12 +33,11 @@ export class AuthService {
     }
   }
 
-  _generateAuthToken(id: string) {
+  _generateAuthToken(username: string) {
     const { jwtSecret } = config;
-    console.log('id ===== ', id, jwtSecret);
     const token = jwt.sign(
       {
-        id: id,
+        id: username,
       },
       jwtSecret,
     );
