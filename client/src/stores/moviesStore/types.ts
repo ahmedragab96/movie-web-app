@@ -7,19 +7,20 @@ export interface Movie {
 }
 
 export enum Type {
-    MOVIE = "movie",
-    SERIES = "series",
-    EPISODE = "episode",
-  }
+  MOVIE = "movie",
+  SERIES = "series",
+  EPISODE = "episode",
+}
 
 export interface SearchParams {
-    text: string;
-    type?: Type;
-    year?: number;
+  text: string;
+  type?: Type;
+  year?: number;
 }
 
 export interface MoviesResponse {
-    movies: {
-        Search: Movie[],
-    }
+  movies: {
+    Search: Movie[];
+    Error?: string;
+  };
 }

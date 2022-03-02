@@ -1,0 +1,67 @@
+.movies_container {
+  background-color: bisque;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search_container {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 180px;
+  width: 50%;
+}
+
+.movies_textInput {
+  margin: 15px 0;
+  width: 200px;
+  height: 20px;
+  padding: 5px;
+}
+
+.input_dropdown {
+    padding: 5px;
+    margin: 0px 10px;
+}
+
+.cards_container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+    background-color: bisque;
+    overflow-y: scroll;
+}
+
+.cards_container::-webkit-scrollbar {
+    width: 5px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+.cards_container::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+.movie_card {
+    width: 200px;
+    height: 250px;
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px 20px;
+}
+
+.movie_poster {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.movie_title {
+    text-align: center;
+}
