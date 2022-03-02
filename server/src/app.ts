@@ -5,6 +5,7 @@ import {
   Router as api,
 } from "./routes";
 import cors from 'cors';
+import { expressLogger } from './middlewares/logs'
 
 const app = express();
 const port = 5000;
@@ -12,6 +13,8 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(expressLogger);
 
 app.use('/v1', api);
 
