@@ -9,7 +9,7 @@ client.on("error", function (err) {
 });
 
 export async function setCache(searchParams: string, data: any) {
-  return await client.setex(searchParams, config.cacheExpirationTime, data);
+  return await client.setex(searchParams, config.cacheExpirationTime, JSON.stringify(data));
 }
 
 export async function getCache(searchParams: string) {

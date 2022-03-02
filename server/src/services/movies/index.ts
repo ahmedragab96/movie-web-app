@@ -14,6 +14,10 @@ export class MoviesService {
 
   public async getMovies(params: SearchParams): Promise<Movie[]> {
     try {
+        const cachedMovies = await getCache(JSON.stringify(params));
+        if (cachedMovies) {
+            return cachedMovies;
+        }
       const movies: Movie[] = await axios.get("/", {
         params: {
           s: params.text,
@@ -21,6 +25,7 @@ export class MoviesService {
           y: params.year,
         },
       });
+      await setCache(JSON.stringify(params), movies);
       return movies;
     } catch (error) {
       console.log(error);
