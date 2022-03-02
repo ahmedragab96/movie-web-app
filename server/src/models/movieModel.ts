@@ -1,16 +1,19 @@
 export interface Movie {
-    name: string;
-    image: string;
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
 }
 
 export enum Type {
-    MOVIE = 'movie',
-    SERIES = 'series',
-    EPISODE = 'episode',
+  MOVIE = "movie",
+  SERIES = "series",
+  EPISODE = "episode",
 }
 
 export interface SearchParams {
-    text: string;
-    type: Type;
-    year: number;
+  text: string;
+  type: Type;
+  year: number;
 }

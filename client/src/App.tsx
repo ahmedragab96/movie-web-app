@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import "./App.css";
+import { useStores } from "./hooks/useStores";
+import { observer } from "mobx-react";
+import Login from "./screens/loginScreen";
+import MoviesScreen from "./screens/moviesSearchScreen";
+import AuthenticationRoute from "./components/AuthenticatedRoute";
 
-function App() {
+const App = observer(() => {
+  const { authStore } = useStores();
+  console.log('is auth --- ', authStore.accessToken);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <AuthenticationRoute
+              authFallbackRoute="/login"
+              hasPermission={authStore.isAuthenticated}
+            />
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path={"/"} element={<Navigate to={"/movies"} />} />
+          <Route path={"/movies"} element={<MoviesScreen />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
-}
+});
 
 export default App;
