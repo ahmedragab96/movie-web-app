@@ -3,38 +3,21 @@ const asyncRedis = require("async-redis");
 import { config } from '../config';
 
 const client = asyncRedis.createClient(config.redisPort);
-const expirationTime = 300; //second
-const movieKeyFormat = "movie.id=";
 
 client.on("error", function (err) {
-  console.log("Error " + err);
+  console.log("Error : " + err);
 });
 
-export async function setCache(movieId: string, data: any) {
-  const key = movieKeyFormat + movieId;
-  return await set(key, JSON.stringify(data));
+export async function setCache(searchParams: string, data: any) {
+  return await client.setex(searchParams, config.cacheExpirationTime, data);
 }
 
-async function set(key: string, data: any) {
-  await client.setex(key, expirationTime, data);
-}
-
-export async function getCache(movieId: string) {
-  const key = movieKeyFormat + movieId;
-  const data = await get(key);
+export async function getCache(searchParams: string) {
+  const data = await client.get(searchParams);
   return JSON.parse(data);
 }
 
-async function get(key: string) {
-  return await client.get(key);
-}
-
-export async function clearCache(movieId: string) {
-  const key = movieKeyFormat + movieId;
-  return await clear(key);
-}
-
-async function clear(key: string) {
+export async function clearCache(key: string) {
   return await client.del(key);
 }
 

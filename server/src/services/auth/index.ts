@@ -14,23 +14,19 @@ export class AuthService {
   }
 
   public async register(userData: User): Promise<User> {
-    try {
-      let user = await getHashCache(userData.username);
-      if (!user) {
-        const token = this._generateAuthToken(userData.username);
-        userData.accessToken = token;
-        await setHashCache(userData.username, userData);
+    let user = await getHashCache(userData.username);
+    if (!user) {
+      const token = this._generateAuthToken(userData.username);
+      userData.accessToken = token;
+      await setHashCache(userData.username, userData);
 
-        user = userData;
-      } else {
-        if (userData.password !== user.password) {
-          throw new Error('Wrong Password');
-        }
+      user = userData;
+    } else {
+      if (userData.password !== user.password) {
+        throw 'Wrong Password';
       }
-      return user;
-    } catch (error) {
-      console.log(error);
     }
+    return user;
   }
 
   _generateAuthToken(username: string) {
