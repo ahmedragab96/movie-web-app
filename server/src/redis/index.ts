@@ -2,7 +2,7 @@
 const asyncRedis = require("async-redis");
 import { config } from '../config';
 
-const client = asyncRedis.createClient(config.redisPort);
+const client = asyncRedis.createClient(config.redisPort, config.redisHost);
 
 client.on("error", function (err) {
   console.log("Error : " + err);

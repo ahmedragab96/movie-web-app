@@ -5,7 +5,7 @@ import {
   Router as api,
 } from "./routes";
 import cors from 'cors';
-import { expressLogger } from './middlewares/logs'
+import { expressLogger } from './middlewares/logs';
 
 const app = express();
 const port = 5000;
