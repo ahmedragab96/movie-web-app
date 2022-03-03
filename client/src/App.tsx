@@ -9,7 +9,6 @@ import AuthenticationRoute from "./components/AuthenticatedRoute";
 
 const App = observer(() => {
   const { authStore } = useStores();
-  console.log('is auth --- ', authStore.accessToken);
   
   return (
     <BrowserRouter>

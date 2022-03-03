@@ -21,8 +21,6 @@ export default class AuthStore {
     @action
     public setAccessToken = (token?: string) => {
       this.accessToken = token;
-      console.log(token);
-      
       localStorage.setItem('currentUser', JSON.stringify({
         accessToken: token,
       }));
@@ -36,8 +34,6 @@ export default class AuthStore {
           password,
         };
         const response = await axios.post('/auth/register', data);
-        console.log('response === ', response);
-        
         this.setAccessToken(response.data.user.accessToken);
       } catch (error) {
         console.log(error);

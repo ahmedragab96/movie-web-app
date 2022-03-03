@@ -21,11 +21,7 @@ export const authMiddleware = async (
       throw "Unauthorized Access";
     }
     const decoded: any = jwt.verify(accessToken, config.jwtSecret);
-console.log(decoded);
-
-    const user = await getHashCache(decoded.id);
-    console.log(user);
-    
+    const user = await getHashCache(decoded.id);    
 
     // access denied if user doesn't exist
     if (!user) {

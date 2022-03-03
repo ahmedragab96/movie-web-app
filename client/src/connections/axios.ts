@@ -15,9 +15,7 @@ instance.interceptors.request.use((config) => {
 });
 
 instance.interceptors.response.use(
-  (response) => {
-    console.log('in res interceptor ');
-    
+  (response) => {    
     return response.data;
   },
   (error) => {
